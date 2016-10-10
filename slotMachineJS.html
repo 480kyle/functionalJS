@@ -46,7 +46,7 @@ window.onload = function(){
   document.getElementById("slotBarWrapper").addEventListener("click", SlotMachine.runSlot);
 }
 
-var SlotMachine = function(){
+var SlotMachine = (function(){
   var runSlot = function(){
     var userMoney = document.getElementById("userMoney").value;
     var betMoney = document.getElementById("betMoney").value;
@@ -76,7 +76,7 @@ var SlotMachine = function(){
   return {
     runSlot: runSlot
   }
-}
+})();
 
 
 
