@@ -1,0 +1,114 @@
+<html>
+<head>
+<style>
+.slotMachineWrapper{
+  width: 80%;
+  border: 1px solid black;
+  text-align: center;
+  margin: auto;
+}
+
+.slotTop, .slotBottom{
+  margin: 10px auto;
+  display: block;
+}
+
+.pattern{
+  display: inline-block;
+  border: 1px solid black;
+  width:20%;
+  height: 300px;
+}
+
+.slotBarWrapper{
+  width:10%;
+  height: 300px;
+  float: right;
+  cursor: pointer;
+}
+
+.slotBall{
+  width: 50px;
+  height: 50px;
+  margin-right: 50px;
+  border-radius: 50%;
+  background-color: red;
+}
+
+.slotBar{
+  width: 20px;
+  height: 100px;
+  background-color: #d0d0d0;
+}
+</style>
+<script>
+window.onload = function(){
+  document.getElementById("slotBarWrapper").addEventListener("click", SlotMachine.runSlot);
+}
+
+var SlotMachine = function(){
+  var runSlot = function(){
+    var userMoney = document.getElementById("userMoney").value;
+    var betMoney = document.getElementById("betMoney").value;
+    var patterns = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+    var pattern1, pattern2, patter3;
+    var num1 = Math.round(Math.random() * 10) % 7;
+    var num2 = Math.round(Math.random() * 10) % 7;
+    var num3 = Math.round(Math.random() * 10) % 7;
+
+    pattern1 = patterns[num1];
+    pattern2 = patterns[num2];
+    pattern3 = patterns[num3];
+
+    if(pattern1 === pattern2 && pattern1 === pattern3){
+
+    }
+
+    document.getElementById("pattern1").innerHTML = pattern1;
+    document.getElementById("pattern2").innerHTML = pattern2;
+    document.getElementById("pattern3").innerHTML = pattern3;
+  }
+
+  var getPrize = function(betMoney){
+
+  }
+
+  return {
+    runSlot: runSlot
+  }
+}
+
+
+
+</script>
+</head>
+<body>
+<div class="slotMachineWrapper">
+  <div class="slotTop">
+    <div class="userMoneyWrapper">
+      <span id="userMoneyTitle">You got $</span>
+      <input id="userMoney" type="number" value="1000"/>
+    </div>
+  </div>
+  <div class="slotMain">
+    <div id="pattern1" class="pattern"></div>
+    <div id="pattern2" class="pattern"></div>
+    <div id="pattern3" class="pattern"></div>
+    <div id="slotBarWrapper" class="slotBarWrapper">
+      <div id="slotBall" class="slotBall"></div>
+      <div id="slotBar" class="slotBar"></div>
+    </div>
+  </div>
+  <div class="slotBottom">
+    <div class="prizeWrapper">
+      <span id="prizeTitle">You win: $</span>
+      <span id="prizeContent"></span>
+    </div>
+    <div class="betMoneyWrapper">
+      <span id="betMoneyTitle">Put $</span>
+      <input id="betMoney" type="number"/>
+    </div>
+  </div>
+</div>
+</body>
+</html>
