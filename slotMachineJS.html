@@ -1,33 +1,30 @@
+<!DOCTYPE html>
 <html>
 <head>
+     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <style>
 .slotMachineWrapper{
-  width: 80%;
+  width: 100%;
   border: 1px solid black;
-  text-align: center;
   margin: auto;
 }
-
 .slotTop, .slotBottom{
   margin: 10px auto;
   display: block;
 }
-
 .pattern{
   display: inline-block;
   border: 1px solid black;
   width:20%;
   height: 300px;
-  font-size: 10em;
+  font-size: 5em;
 }
-
 .slotBarWrapper{
   width:10%;
   height: 300px;
-  float: right;
+  display: inline-block;
   cursor: pointer;
 }
-
 .slotBall{
   width: 50px;
   height: 50px;
@@ -35,10 +32,11 @@
   border-radius: 50%;
   background-color: red;
 }
-
 .slotBar{
   width: 20px;
   height: 100px;
+  margin-top: -3px;
+  margin-left: 15px;
   background-color: #d0d0d0;
 }
 </style>
@@ -46,41 +44,53 @@
 window.onload = function(){
   document.getElementById("slotBarWrapper").addEventListener("click", SlotMachine.runSlot);
 }
-
 var SlotMachine = (function(){
   var runSlot = function(){
     var userMoney = document.getElementById("userMoney").value;
     var betMoney = document.getElementById("betMoney").value;
-    var patterns = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+    var patterns = ['apple', 'lemon', 'orange', 'bananas', 'peach', 'grapes', 'seven'];
     var pattern1, pattern2, patter3;
+
+    if(betMoney == 0) {
+        alert("베팅 금액을 입력해주세요.");
+        return;
+    }
+
+    if(userMoney < betMoney){
+        alert("돈 없으면 꺼져.");
+        return;
+    }
+
+    userMoney -= betMoney;
+    document.getElementById("userMoney").value = userMoney;
+
     var num1 = Math.round(Math.random() * 10) % 7;
     var num2 = Math.round(Math.random() * 10) % 7;
     var num3 = Math.round(Math.random() * 10) % 7;
-
-    pattern1 = patterns[num1];
-    pattern2 = patterns[num2];
-    pattern3 = patterns[num3];
+    
+    pattern1 = "./" + patterns[num1] + ".svg";
+    pattern2 = "./" + patterns[num2] + ".svg";
+    pattern3 = "./" + patterns[num3] + ".svg";
+    
+    document.getElementById("pattern1Img").setAttribute("src", pattern1);
+    document.getElementById("pattern2Img").setAttribute("src", pattern2);
+    document.getElementById("pattern3Img").setAttribute("src", pattern3) ;
 
     if(pattern1 === pattern2 && pattern1 === pattern3){
-
+        alert("jackpot!!!!");
     }
 
-    document.getElementById("pattern1").innerHTML = pattern1;
-    document.getElementById("pattern2").innerHTML = pattern2;
-    document.getElementById("pattern3").innerHTML = pattern3;
+    if(userMoney < 0){
+        alert("당신은 파산하였습니다.");
+        return;
+    }
   }
-
   var getPrize = function(betMoney){
-
   }
-
   return {
     runSlot: runSlot
   }
 })();
-
-
-
 </script>
 </head>
 <body>
@@ -88,13 +98,19 @@ var SlotMachine = (function(){
   <div class="slotTop">
     <div class="userMoneyWrapper">
       <span id="userMoneyTitle">You got $</span>
-      <input id="userMoney" type="number" value="1000"/>
+      <input id="userMoney" type="number" value="1000" readonly/>
     </div>
   </div>
   <div class="slotMain">
-    <div id="pattern1" class="pattern"></div>
-    <div id="pattern2" class="pattern"></div>
-    <div id="pattern3" class="pattern"></div>
+    <div id="pattern1" class="pattern">
+        <img id="pattern1Img" src="">
+    </div>
+    <div id="pattern2" class="pattern">
+        <img id="pattern2Img" src="">
+    </div>
+    <div id="pattern3" class="pattern">
+        <img id="pattern3Img" src="">
+    </div>
     <div id="slotBarWrapper" class="slotBarWrapper">
       <div id="slotBall" class="slotBall"></div>
       <div id="slotBar" class="slotBar"></div>
@@ -103,11 +119,11 @@ var SlotMachine = (function(){
   <div class="slotBottom">
     <div class="prizeWrapper">
       <span id="prizeTitle">You win: $</span>
-      <span id="prizeContent"></span>
+      <span id="prizeContent">0</span>
     </div>
     <div class="betMoneyWrapper">
       <span id="betMoneyTitle">Put $</span>
-      <input id="betMoney" type="number"/>
+      <input id="betMoney" type="number" value="0"/>
     </div>
   </div>
 </div>
