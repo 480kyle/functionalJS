@@ -55,11 +55,11 @@ var SlotMachine = (function(){
         alert("베팅 금액을 입력해주세요.");
         return;
     }
-
-    if(userMoney < betMoney){
-        alert("돈 없으면 꺼져.");
-        return;
-    }
+console.log(userMoney, betMoney);
+    // if(userMoney < betMoney){
+    //     alert("돈 없으면 꺼져.");
+    //     return;
+    // }
 
     userMoney -= betMoney;
     document.getElementById("userMoney").value = userMoney;
